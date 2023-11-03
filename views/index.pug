@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1 Nitish
+  p Welcome to #{title}
+  p My Name is Nitish
+  button(type="button" class="btn btn-secondary" onclick="goFaster()") Press Me
+  br
+  div#faster Increase the speed 
+  a(href="/Elephant") View Elephant page
+  script.
+    let mph = 20;
+    let change = 1;
+    function goFaster() {
+      mph += change;
+      change += 1;
+      document.getElementById('faster').textContent = `MPH ${mph} with change ${change}`;
+    }
