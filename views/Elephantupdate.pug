@@ -1,45 +1,53 @@
 extends layout
+
 block content
   h1= title
 
   if (toShow == null)
     h2 No instance to update details
   else
-   - let Elephantid = toShow._id
-   - let Elephant_type = toShow.Elephant_type
-   - let Elephant_weight = toShow.Elephant_weight
-   - let Elephant_size = toShow.Elephant_size
+    - let Elephantid = toShow._id
+    - let Elephant_type = toShow.Elephant_type
+    - let Elephant_weight = toShow.Elephant_weight
+    - let Elephant_size = toShow.Elephant_size
 
-  div.row(class='mb-2')
-    div.mr-1 ID is
-    div #{Elephantid}
+    div.row(class='mb-2')
+      div.col-6
+        div.mr-1 ID is
+        div #{Elephantid}
+
     - let actionid = "/resource/Elephant/" + Elephantid
-    form(id='ElephantForm', action=actionid, method="PUT")
+    form#ElephantForm.col-6(action=actionid, method="PUT")
       div.form-group
         label.ElephantAttr(for='Elephant_type') Elephant type
-        input#Elephant_type(type='text', name='Elephant_type', value=Elephant_type)
+        input#Elephant_type.form-control(type='text', name='Elephant_type', value=Elephant_type)
       div.form-group
         label.ElephantAttr(for='Elephant_size') Elephant size
-        input#Elephant_size(type='text', name='Elephant_size', value=Elephant_size)
+        input#Elephant_size.form-control(type='text', name='Elephant_size', value=Elephant_size)
       div.form-group
         label.ElephantAttr(for='Elephant_weight') Elephant weight
-        input#Elephant_weight(type='number', name='Elephant_weight', value=Elephant_weight)
-      input(type="submit")
+        input#Elephant_weight.form-control(type='number', name='Elephant_weight', value=Elephant_weight)
+      input.btn.btn-primary(type="submit")
 
-  script.
-    document.forms['ElephantForm'].addEventListener('submit', (event) => {
-      event.preventDefault();
-      // TODO: Add functionality to indicate form submission to the user
-      fetch(event.target.action, {
-        method: 'PUT',
-        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
-      }).then((resp) => {
-        return resp.json(); // or resp.text() or whatever the server sends
-      }).then((body) => {
-        alert("Update succeeded");
-        // TODO: Handle the response body
-      }).catch((error) => {
-        alert("Update failed " + error);
-        // TODO: Handle the error
+    script.
+      document.getElementById('ElephantForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        fetch(event.target.action, {
+          method: 'PUT',
+          body: new URLSearchParams(new FormData(event.target))
+        })
+        .then((resp) => {
+          if (!resp.ok) {
+            throw new Error(`Update failed with status: ${resp.status}`);
+          }
+          return resp.json();
+        })
+        .then((body) => {
+          alert("Update succeeded");
+          // Handle the response body as needed
+        })
+        .catch((error) => {
+          alert("Update failed " + error);
+          // Handle the error
+        });
       });
-    });
