@@ -1,0 +1,50 @@
+extends layout
+block content
+  h1= title
+  if (toShow == null)
+    h2 No instance to delete
+  else
+    - let Elephantid = toShow._id
+    - let Elephant_type = toShow.Elephant_type
+    - let Elephant_Size = toShow.Elephant_Size
+    - let Elephant_weight = toShow.Elephant_weight
+    - let actionid = "/resource/Elephant/" + Elephantid
+    script.
+      let actionid = "#{actionid}"
+    div
+      div.row
+        div(class='ElephantAttr mr-3') Elephant ID is:
+          div #{Elephantid}
+      div.row
+        div(class='ElephantAttr mr-3') Elephant Type is:
+          div #{Elephant_type}
+      div.row
+        div(class='ElephantAttr mr-3') Elephant Size is:
+          div #{Elephant_Size}
+      div.row
+        div(class='ElephantAttr mr-3') Elephant weight is:
+          div #{Elephant_weight}
+      button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete
+      button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
+    script.
+      function cancel() {
+        // Go back to the home page for the Elephant collection
+        window.location.href='/Elephant'
+      }
+    script.
+      function deleteOnid() {
+        console.log("starting delete")
+        // delete first
+        fetch(actionid, {
+          method: 'DELETE' // Don't need a body for the delete
+        }).then((resp) => {
+          return resp.json(); // or resp.text() or whatever the server sends
+        }).then((body) => {
+          alert("Delete succeeded")
+          window.location.href='/Elephant'
+          // TODO handle body
+        }).catch((error) => {
+          // TODO handle error
+          alert("Delete failed " + error )
+        });
+      }

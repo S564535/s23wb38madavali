@@ -1,0 +1,35 @@
+extends layout
+
+block content
+  h1= title
+
+  form(id='ElephantForm', action="/resource/Elephant", method="POST")
+    div.form-group
+      label.ElephantAttr(for='Elephant_type') Elephant type
+      input#Elephant_type(type='text', name='Elephant_type')
+    div.form-group
+      label.ElephantAttr(for='Elephant_Size') Elephant size
+      input#Elephant_Size(type='text', name='Elephant_Size')
+    div.form-group
+      label.ElephantAttr(for='Elephant_weight') Elephant weight
+      input#Elephant_weight(type='number', name='Elephant_weight')
+    input(type="submit")
+
+  script.
+    document.forms['ElephantForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      // TODO: Add functionality to indicate form submission to the user
+      fetch(event.target.action, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+      }).then((resp) => {
+        return resp.json(); // or resp.text() or whatever the server sends
+      }).then((body) => {
+        alert("Save succeeded");
+        // TODO: Handle the response body
+      }).catch((error) => {
+        // TODO: Handle the error
+        alert("Save failed " + error);
+      });
+    });
+
