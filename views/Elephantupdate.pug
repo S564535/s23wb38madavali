@@ -37,9 +37,9 @@ block content
           body: new URLSearchParams(new FormData(event.target))
         })
         .then((resp) => {
-          if (!resp.ok) {
-            throw new Error(`Update failed with status: ${resp.status}`);
-          }
+          //if (!resp.ok) {
+            //throw new Error(`Update failed with status: ${resp.status}`);
+          //}
           return resp.json();
         })
         .then((body) => {
