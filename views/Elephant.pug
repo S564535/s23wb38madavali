@@ -2,6 +2,7 @@ extends layout
 
 block content
   h1= title
+  a(class="btn btn-success" href="/Elephant/create") Create
   - var result=[{Elephant_type:"Asian Elephant",Elephant_Size:"Large",Elephant_weight:3000},{Elephant_type:"African Elephant",Elephant_Size:"Extra Large",Elephant_weight:2000},{Elephant_type:"African Bush Elephant",Elephant_Size:"Extra Large",Elephant_weight:2500}]
   div.container-fluid
     div.row  
@@ -12,6 +13,8 @@ block content
        br
        hr
        button.btn( class="btn-primary ml-1", onclick= `dispatch(\"/Elephant/update?id=${Elephant._id}\")`) Update
+       a.btn.btn-warning(href=`/Elephant/delete?id=${Elephant ._id}`) Delete 
+       a.btn.btn-danger(href=`/Elephant/detail?id=${Elephant._id}`) Details 
     script. 
         function buy(index)
         {
